@@ -1,0 +1,38 @@
+[
+    {
+        "id": 1,
+        "nombre": "Corte",
+        "precio": 700,
+        "categoria": "Corte",
+        "imagen": ""
+    },
+    {
+        "id": 2,
+        "nombre": "Corte A Navaja",
+        "precio": 1000,
+        "categoria": "Corte Especial",
+        "imagen": ""
+    },
+    {
+        "id": 3,
+        "nombre": "Color",
+        "precio": 5000,
+        "categoria": "Color",
+        "imagen": ""
+
+    },
+    {
+        "id": 4,
+        "nombre": "Mechas",
+        "precio": 2500,
+        "categoria": "Mechas",
+        "imagen": ""
+    },
+    {
+        "id": 5,
+        "nombre": "Service",
+        "precio": 2000,
+        "categoria": "Lavado",
+        "imagen": ""
+    }
+]
