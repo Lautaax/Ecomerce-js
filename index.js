@@ -1,3 +1,5 @@
+const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+const botonesAgregar = document.querySelectorAll(".btn-primary");
 
 const divCards = document.querySelector(".cards");
 const lista = document.querySelector("#lista");
@@ -31,45 +33,38 @@ const buscarTodosProductos = async () => {
   });
   
   
-  
-  
   productosJson.forEach((prod) => {
-    const boton = document.getElementById(prod.id)
-    boton.addEventListener("click", (e) => {
-      console.log(e.target.id)
-      const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
-      const botonesAgregar = document.querySelectorAll(".btn-primary");
+		const boton = document.getElementById(prod.id);
+		boton.addEventListener("click", async (e) => {
+			console.log(e.target.id);
+			const productosFetch = await fetch("productos.json");
+			const productosJson = await productosFetch.json();
+			const producto = productosJson.find(
+				(prod) => prod.id === parseInt(boton.id),
+			);
 
-botonesAgregar.forEach((boton) => {
-  boton.onclick = async () => {
-    const productosFetch = await fetch("productos.json");
-    const productosJson = await productosFetch.json();
-    const producto = productosJson.find(
-      (prod) => prod.id === parseInt(boton.id)
-    );
+			const productoCarrito = {
+				id: producto.id,
+				nombre: producto.nombre,
+				precio: producto.precio,
+				cantidad: 1,
+			};
+			const indexCarrito = carrito.findIndex((prod) => prod.id === producto.id);
 
-    const productoCarrito = {
-      id: producto.id,
-      nombre: producto.nombre,
-      precio: producto.precio,
-      cantidad: 1,
-    };
-    const indexCarrito = carrito.findIndex((prod) => prod.id === producto.id);
-    if (indexCarrito === -1) {
-      carrito.push(productoCarrito);
-    } else {
-      carrito[indexCarrito].cantidad += 0;
-    }
-    console.log(carrito);
-  };
-});
+			if (indexCarrito === -1) {
+				carrito.push(productoCarrito);
+			} else {
+				carrito[indexCarrito].cantidad += 0;
+			}
+			console.log(carrito);
+
 //  Finalizar la compra
 
 const botonFinalizar = document.querySelector("#finalizar");
 botonFinalizar.onclick = () => {
    const totalCompra = carrito.map((prod) => prod.precio * prod.cantidad).reduce((elem1, elem2) => elem1 + elem2,);
   localStorage.clear
-  document.getElementById('lbl').innerHTML =  ` Escogiste ${prod.cantidad} productos y el total de la compra es de ${totalCompra} ` ;
+  document.getElementById('lbl').innerHTML =  ` Escogiste ${productoCarrito} productos y el total de la compra es de ${totalCompra} ` ;
   localStorage.clear
   
 };
